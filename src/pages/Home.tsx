@@ -9,7 +9,7 @@ import UseCases from '../components/UseCases'
 import Testimonials from '../components/Testimonials'
 import Pricing from '../components/Pricing'
 import FAQ from '../components/FAQ'
-import CallToAction from '../components/CallToAction'
+import CallToAction from '../components/CTA'
 import Footer from '../components/Footer'
 
 function App() {

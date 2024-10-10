@@ -1,80 +1,56 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
-const FAQ = () => {
-  const faqs = [
-    {
-      question: 'Is there a limit to the number of collaborators?',
-      answer: 'Our free plan allows up to 3 collaborators per board. Pro and Enterprise plans offer unlimited collaborators.',
-    },
-    {
-      question: 'Can I use the whiteboard offline?',
-      answer: `While our platform is primarily designed for real-time online collaboration, we offer a limited offline mode that allows you to continue working on your boards when you're not connected to the internet. Your changes will sync once you're back online.`,
-    },
-    {
-      question: 'How secure is my data?',
-      answer: 'We take data security very seriously. All data is encrypted in transit and at rest. We use industry-standard security measures and regularly perform security audits to ensure your information is protected.',
-    },
-    {
-      question: 'Can I integrate the whiteboard with other tools?',
-      answer: 'Yes, we offer integrations with popular tools like Slack, Google Drive, and Trello. Our API also allows for custom integrations on our Enterprise plan.',
-    },
-  ]
+const faqs = [
+  {
+    question: "Is there a limit to the number of collaborators?",
+    answer: "The number of collaborators depends on your plan. The Free plan allows up to 3 team members, the Pro plan up to 10, and the Enterprise plan has no limit."
+  },
+  {
+    question: "Can I use the whiteboard offline?",
+    answer: "While the full collaborative features require an internet connection, we offer an offline mode that allows you to continue working on your boards. Changes will sync once you're back online."
+  },
+  {
+    question: "How secure is my data?",
+    answer: "We take data security very seriously. All data is encrypted in transit and at rest, and we use industry-standard security measures to protect your information. Enterprise plans also offer additional security features."
+  },
+];
 
+const FAQ: React.FC = () => {
   return (
-    <section id="faq" className="py-16 bg-white">
+    <section id="faq" className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
         <motion.h2
-          className="text-3xl font-bold text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white"
         >
           Frequently Asked Questions
         </motion.h2>
         <div className="max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
-            <FAQItem key={index} question={faq.question} answer={faq.answer} />
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="mb-6"
+            >
+              <details className="group">
+                <summary className="flex justify-between items-center font-medium cursor-pointer list-none bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                  <span className="text-gray-900 dark:text-white">{faq.question}</span>
+                  <ChevronDown className="transition group-open:rotate-180 text-gray-500 dark:text-gray-400" />
+                </summary>
+                <p className="text-gray-600 dark:text-gray-300 mt-3 ml-4">{faq.answer}</p>
+              </details>
+            </motion.div>
           ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-const FAQItem = ({ question, answer }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <motion.div
-      className="mb-4 border-b border-gray-200 pb-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <button
-        className="flex justify-between items-center w-full text-left"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span className="text-lg font-semibold">{question}</span>
-        {isOpen ? <ChevronUp /> : <ChevronDown />}
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mt-2 text-gray-600"
-          >
-            {answer}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  )
-}
-
-export default FAQ
+export default FAQ;

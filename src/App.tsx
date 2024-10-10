@@ -1,26 +1,45 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
-import Home from './pages/Home';
-import Whiteboard from './pages/Whiteboard';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
+import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from './components/ThemeProvider';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Features from './components/Features';
+import HowItWorks from './components/HowItWorks';
+import Benefits from './components/Benefits';
+import UseCases from './components/UseCases';
+import Testimonials from './components/Testimonials';
+import Pricing from './components/Pricing';
+import FAQ from './components/FAQ';
+import CTA from './components/CTA';
+import Footer from './components/Footer';
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(true); // Set default to true for dark mode
+
+  useEffect(() => {
+    // Apply dark mode class to the document body
+    document.body.classList.toggle('dark', isDarkMode);
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100 flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/whiteboard/:id" element={<Whiteboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </main>
+    <ThemeProvider>
+      <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
+        <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+        <Hero />
+        <Features />
+        <HowItWorks />
+        <Benefits />
+        <UseCases />
+        <Testimonials />
+        <Pricing />
+        <FAQ />
+        <CTA />
+        <Footer />
       </div>
-    </Router>
+    </ThemeProvider>
   );
 }
 
